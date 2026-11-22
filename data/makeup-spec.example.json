@@ -1,0 +1,103 @@
+{
+  "version": "0.1",
+  "example_for": "示例：淡颜、圆脸、中庭略长、中性偏暖、冷棕发色、通勤场景、auto 风格",
+  "input": {
+    "photo": "selfie.jpg",
+    "user_brief": {
+      "style": "auto",
+      "occasion": "通勤",
+      "intensity": null,
+      "avoid": ["浓眼线", "假睫毛"]
+    }
+  },
+  "analysis": {
+    "face_shape": {
+      "label": "round",
+      "confidence": 0.81,
+      "ratios": {
+        "length_width": 1.22,
+        "upper_mid_lower": [1.0, 1.08, 0.96],
+        "jaw_angle_deg": 132,
+        "cheekbone_prominence": 0.28,
+        "temple_hollow": false,
+        "midface_flat": true
+      }
+    },
+    "features": {
+      "eyes": { "shape": "inner_double", "spacing": "slightly_wide", "tilt": "neutral", "puffiness": 0.25, "lid_space": "narrow" },
+      "nose": { "bridge_height": "low", "tip": "rounded", "width": "medium", "dorsum": "straight" },
+      "lips": { "volume": "thin", "cupid_bow": "soft", "corner": "neutral", "philtrum": "normal" },
+      "brows": { "density": "sparse", "shape": "natural", "arch": "low" },
+      "skin": {
+        "depth": 4,
+        "undertone": "neutral_warm",
+        "season": "soft_autumn",
+        "ita_deg": 44,
+        "texture": "normal",
+        "concerns": ["dullness", "undereye_circle"]
+      }
+    },
+    "impression": {
+      "contrast": "low",
+      "feature_size": "small",
+      "bone_vs_flesh": 0.38,
+      "visual_age": "youthful",
+      "density": "light_feature"
+    },
+    "hair": { "color": "cool_brown", "length": "shoulder", "texture": "fine", "parting": "side" }
+  },
+  "decision_trace": [
+    "round face -> 纵向拉长 + 下颌角轻收（强度 0.28，弧线手法）",
+    "midface_long(1.08) -> 腮红横打带过鼻梁，鼻影不连眉头，腮红强度 +0.03",
+    "light_feature -> 强度上限 0.45，主色 <= 2，排除 western_sculpt / abg / evening_glam",
+    "soft_autumn + neutral_warm -> 暖棕系色板，避开冷粉与荧光",
+    "inner_double -> 眼线只填内眼线，重点做睫毛与卧蚕",
+    "occasion=通勤 -> 强度 x0.8，妆效由 satin 收为 cloud"
+  ],
+  "plan": {
+    "style": "thai_water",
+    "style_alternatives": ["water", "smart_office"],
+    "why": "圆脸 + 中庭偏长，泰式白开水用半截上扬眼线与斜扫腮红拉长脸型，同时保持低饱和不压淡颜；通勤场景降强度后最稳。",
+    "intensity": 0.26,
+    "base": {
+      "finish": "cloud",
+      "coverage": "light",
+      "shade": { "depth_delta": 0.5, "undertone": "neutral" },
+      "conceal": ["undereye", "nose_wing_redness"],
+      "powder": "t_zone_only"
+    },
+    "brow": { "shape": "wild_soft_arch", "arch": "medium", "thickness": "medium", "color": "gray_brown", "density": 0.4, "note": "补空隙不勾框，眉头最淡" },
+    "eye": {
+      "shadow": { "families": ["pink_brown"], "finish": "matte", "range": "crease_plus_outer", "depth": 0.22, "lower_lid": "outer_third" },
+      "liner": { "type": "outer_half", "color": "brown", "wing": "slight" },
+      "lash": { "type": "natural", "coat": "thin" },
+      "aegyo_sal": { "shadow": 0.18, "highlight": "matte" }
+    },
+    "contour": { "strength": 0.22, "areas": ["jaw_angle_arc", "nose_double_c_light"], "tone": "cool_gray_brown" },
+    "highlight": { "matte": ["under_eye_triangle", "nasolabial", "nasal_base"], "shimmer": ["nose_tip", "inner_corner"] },
+    "blush": { "families": ["apricot", "peach"], "placement": "diagonal_up_across_nose_bridge", "intensity": 0.26, "finish": "cream", "note": "横向截断中庭，不低于鼻尖" },
+    "lip": { "families": ["milk_tea", "nude_pink"], "finish": "soft_matte", "shape": "blurred_edge", "intensity": 0.28 },
+    "hair": { "change": "none", "styling": "keep", "preserve": ["hairline", "parting", "hair_color"] }
+  },
+  "render": {
+    "preserve": ["face shape", "eye spacing", "nose shape", "lip shape", "skin tone", "hairline", "hairstyle", "expression", "camera angle", "background"],
+    "prompt": "Use the attached photo as the identity reference. Keep the exact same face shape, eye spacing, nose shape, lip shape, skin tone, hairline, hairstyle and expression; the person must remain clearly recognizable. Apply makeup only, do not reshape the face, do not enlarge the eyes, do not change skin depth. Base: soft-focus cloud-skin finish, light coverage, even tone, natural skin texture with visible pores, no plastic sheen. Brows: wild soft-arched gray-brown, soft feathered edges, lighter at the inner head. Eyes: pink-brown matte eyeshadow within the crease and deepened at the outer corner and outer lower lash line, brown eyeliner on the outer half with a very slight wing, thin natural mascara, subtle aegyo-sal. Contour: light cool gray-brown along the nose sides and an arc under the jaw angle, fully blended. Highlight: matte highlight under the eyes, on the nasolabial folds and nasal base; a tiny shimmer at the nose tip and inner corners only. Blush: sheer warm peach cream blush swept diagonally up across the cheek and lightly over the nose bridge, blurred edges. Lips: soft-matte nude milk-tea lip, blurred edge, no harsh lip line. Keep the same framing, lighting direction, background, hair and clothing. Photorealistic portrait, 85mm lens, soft directional window light, neutral background, natural color grading, sharp focus on the face, no beauty filter.",
+    "negative": "different person, changed face shape, slimmed jaw, enlarged eyes, reshaped nose, different skin tone, over-smoothed skin, plastic skin, heavy filter, glossy grease, harsh lines, smudged makeup, extra jewelry, different hairstyle, different background, heavy false lashes, thick black eyeliner"
+  },
+  "qa": {
+    "identity_sim_min": 0.75,
+    "skin_deltaE_max": 3,
+    "makeup_deltaE_max": 12,
+    "landmark_shift_max_pct": 2.0,
+    "checks": ["no face reshape", "no skin lightening", "no added jewelry", "hair unchanged", "makeup intensity matches 0.26"],
+    "fallback": "identity_sim < 0.6 -> 强度 x0.7 并从原图重跑；仍失败 -> face swap 回贴原脸"
+  },
+  "deliverable": {
+    "image": "output/look_01.png",
+    "card": {
+      "title": "通勤泰式白开水",
+      "sections": ["为什么适合你", "上妆顺序", "每个部位的位置与手法", "色系建议", "三个避坑"],
+      "note": "AI 生成效果预览，非医疗美容建议"
+    }
+  }
+}

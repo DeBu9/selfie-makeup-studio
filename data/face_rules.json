@@ -1,0 +1,149 @@
+{
+  "version": "0.1",
+  "note": "特征 -> 修饰动作的确定性决策表。数值均为 0-1 强度。生成层只消费 Makeup Spec，本表不直接产生提示词。",
+  "face_shape": {
+    "oval": {
+      "goal": "保持均衡，提升精致度",
+      "contour": { "areas": ["nose_side_light"], "tone": "cool_gray_brown", "strength": 0.12 },
+      "blush": { "placement": "cheek_center_sheer", "intensity": 0.2 },
+      "brow": { "shape": "soft_natural", "arch": "low" },
+      "highlight": { "matte": ["under_eye_triangle"], "shimmer": ["nose_tip", "cheekbone_top"] },
+      "hair": ["side_part", "soft_waves", "collarbone_length"],
+      "intensity_cap": 0.75,
+      "avoid": []
+    },
+    "round": {
+      "goal": "纵向拉长，收下颌角",
+      "contour": { "areas": ["jaw_angle", "jawline", "hairline_sides"], "tone": "cool_gray_brown", "strength": 0.28, "style": "arc" },
+      "blush": { "placement": "diagonal_up", "intensity": 0.25 },
+      "brow": { "shape": "slight_arch", "arch": "medium" },
+      "highlight": { "matte": ["midface_vertical"], "shimmer": ["nose_tip"] },
+      "hair": ["side_part", "top_volume", "collarbone_length"],
+      "intensity_cap": 0.5,
+      "avoid": ["horizontal_blush", "full_fringe", "flat_top_hair", "heavy_bottom_lash"]
+    },
+    "square": {
+      "goal": "柔化下颌棱角",
+      "contour": { "areas": ["jaw_angle_soft", "hairline_sides"], "tone": "cool_gray_brown", "strength": 0.25, "style": "arc" },
+      "blush": { "placement": "rounded_apple", "intensity": 0.25 },
+      "brow": { "shape": "curved", "arch": "medium" },
+      "highlight": { "matte": ["midface", "chin_center"], "shimmer": ["cheekbone_top"] },
+      "hair": ["soft_waves", "layered_cut", "face_framing_tendrils"],
+      "intensity_cap": 0.7,
+      "avoid": ["straight_jaw_contour", "blunt_bob_at_jaw", "sharp_high_arch_brow"]
+    },
+    "long": {
+      "goal": "横向拉宽，缩短纵向",
+      "contour": { "areas": ["hairline_top", "chin_bottom"], "tone": "cool_gray_brown", "strength": 0.18 },
+      "blush": { "placement": "horizontal_across_cheek", "intensity": 0.25 },
+      "brow": { "shape": "flat_slightly_long", "thickness": "medium_thick" },
+      "highlight": { "matte": ["midface"], "shimmer": ["cheekbone_top_wide"] },
+      "hair": ["air_fringe", "horizontal_waves", "ear_volume"],
+      "intensity_cap": 0.65,
+      "avoid": ["center_part_flat", "high_volume_top", "long_vertical_nose_contour"]
+    },
+    "diamond": {
+      "goal": "弱化颧骨，填太阳穴",
+      "contour": { "areas": ["cheekbone_below", "jawline_light"], "tone": "cool_gray_brown", "strength": 0.22 },
+      "blush": { "placement": "inner_cheek", "intensity": 0.22 },
+      "brow": { "shape": "soft_arch", "arch": "medium" },
+      "highlight": { "matte": ["temple", "midface", "nasal_base"], "shimmer": ["cheekbone_top_inner"] },
+      "hair": ["curtain_bangs", "slight_waves_at_cheek"],
+      "intensity_cap": 0.7,
+      "avoid": ["contour_on_temple", "blush_on_cheekbone_peak"]
+    },
+    "heart": {
+      "goal": "收额头，平衡尖下巴",
+      "contour": { "areas": ["hairline_sides", "temple_light_adjacent"], "tone": "cool_gray_brown", "strength": 0.2 },
+      "blush": { "placement": "lower_apple", "intensity": 0.22 },
+      "brow": { "shape": "soft_arch", "arch": "low" },
+      "highlight": { "matte": ["jawline", "chin_sides"], "shimmer": ["cheekbone_top"] },
+      "hair": ["side_part", "collarbone_length", "light_layers"],
+      "intensity_cap": 0.7,
+      "avoid": ["heavy_fringe", "top_volume_excess"]
+    },
+    "triangle": {
+      "goal": "提亮上半脸，收下颌",
+      "contour": { "areas": ["jaw_angle", "jawline"], "tone": "cool_gray_brown", "strength": 0.3 },
+      "blush": { "placement": "upper_cheek_diagonal", "intensity": 0.22 },
+      "brow": { "shape": "slight_arch", "arch": "medium" },
+      "highlight": { "matte": ["forehead_center", "midface"], "shimmer": ["cheekbone_top"] },
+      "hair": ["top_volume", "ear_length_layers"],
+      "intensity_cap": 0.6,
+      "avoid": ["bottom_heavy_hair", "low_blush"]
+    },
+    "soft_square": {
+      "goal": "方脸手法降强度，保留肉感",
+      "contour": { "areas": ["jaw_angle_soft"], "tone": "cool_gray_brown", "strength": 0.18, "style": "arc" },
+      "blush": { "placement": "rounded_apple", "intensity": 0.2 },
+      "brow": { "shape": "curved", "arch": "medium" },
+      "highlight": { "matte": ["midface"], "shimmer": ["cheekbone_top"] },
+      "hair": ["soft_waves", "side_part"],
+      "intensity_cap": 0.5,
+      "avoid": ["heavy_contour", "sharp_liner_wing"]
+    }
+  },
+  "ratios": {
+    "upper_long": { "action": ["fringe_or_bangs", "hairline_contour", "brow_slightly_up"] },
+    "upper_short": { "action": ["expose_forehead", "top_volume", "brow_slightly_down"] },
+    "midface_long": {
+      "action": ["blush_horizontal_across_nose_bridge", "aegyo_sal_lower", "brow_lower", "avoid_long_nose_contour"],
+      "style_penalty": { "chinese_mood": 0.15, "evening_glam": 0.15 }
+    },
+    "midface_short": { "action": ["extend_brow_tail", "blush_diagonal_up", "nose_contour_slightly_longer"] },
+    "lower_long": { "action": ["fuller_lower_lip", "chin_contour_up", "blush_lower"] },
+    "lower_short": { "action": ["chin_highlighter", "lower_lip_center_highlight", "avoid_heavy_chin_contour"] },
+    "eye_spacing_wide": { "action": ["inner_corner_highlight_narrow", "extend_inner_liner", "brow_inner_closer", "wider_nose_bridge_contour"] },
+    "eye_spacing_narrow": { "action": ["outer_corner_highlight", "extend_outer_shadow", "brow_inner_apart", "narrower_nose_contour"] }
+  },
+  "eyes": {
+    "mono": { "goal": "建立纵向轮廓", "shadow_range": "visible_lid_only", "liner": "outer_half_only", "aegyo_sal": true, "avoid": ["wide_shadow", "thick_full_liner"], "extra": ["brow_move_down_if_wide_gap"] },
+    "inner_double": { "goal": "提神放大", "shadow_range": "within_crease", "liner": "inner_fill_thin", "aegyo_sal": true, "avoid": ["thick_liner"] },
+    "double": { "goal": "发挥空间", "shadow_range": "slightly_above_crease", "liner": "flexible", "aegyo_sal": true, "avoid": ["shadow_too_high"] },
+    "puffy": { "goal": "消肿", "shadow_finish": "matte_only", "shadow_range": "crease_plus_outer_triangle", "shimmer": "center_lid_tiny", "avoid": ["shimmer_allover", "saturated_red_orange"], "extra": ["deepen_outer_v"] },
+    "upturned": { "goal": "柔和化", "shadow_direction": "toward_inner", "liner": "straight_or_slightly_down", "avoid": ["winged_liner", "upward_outer_shadow"] },
+    "downturned": { "goal": "提神", "shadow_direction": "upward_outer", "liner": "thin_to_thick_slight_up", "brow": "flat", "avoid": ["heavy_outer_lower_shadow", "arched_brow"] },
+    "elongated": { "goal": "增加圆度", "shadow_height": "up_to_mid_brow", "highlight": "center_lid", "avoid": ["outer_only_depth"] },
+    "round": { "goal": "拉长", "shadow_direction": "horizontal_outer", "liner": "straight_extend", "avoid": ["thick_top_and_bottom"] },
+    "deep_set": { "goal": "提亮", "shadow_finish": "satin_warm", "highlight": "brow_bone_below", "avoid": ["dark_allover"] }
+  },
+  "nose": {
+    "low_bridge": { "contour": "start_at_inner_eye_triangle", "avoid": ["connect_to_brow_head"], "highlight": "midline_matte" },
+    "short": { "contour": "brow_to_tip", "highlight": "bridge_to_septum" },
+    "long": { "contour": "tip_shadow_only", "highlight": "mid_bridge_only" },
+    "wide": { "contour": "wings_inward", "highlight": "narrow_long_line" },
+    "bulbous_tip": { "contour": "small_brackets_to_v", "highlight": "inverted_triangle_on_tip", "avoid": ["round_dot_highlight"] },
+    "aquiline": { "contour": "sides_of_bump", "highlight": "broken_at_bump" },
+    "crooked": { "contour": "shadow_on_concave_side", "highlight": "concealer_on_convex_side" }
+  },
+  "lips": {
+    "thin": { "goal": "增量", "shape": "overlined_0_5mm", "finish": "glossy", "highlight": "center", "avoid": ["matte_dark"] },
+    "full": { "goal": "收敛", "shape": "inner", "finish": "matte", "avoid": ["glossy_allover"] },
+    "sharp_bow": { "goal": "保留或柔化", "shape": "defined_or_blurred" },
+    "soft_bow": { "goal": "造形", "shape": "v_bow_line" },
+    "downturned": { "goal": "提气", "shape": "corner_lifted", "color": "close_to_natural" },
+    "large": { "goal": "缩小", "shape": "inner", "color": "concentrated_center" },
+    "uneven": { "goal": "平衡", "rule": "thin_side_light_and_defined, thick_side_dark_and_soft" }
+  },
+  "impression": {
+    "light_feature": { "intensity_cap": 0.45, "max_main_colors": 2, "prefer_styles": ["water", "korean_glass", "japanese_sheer", "clean_girl", "strawberry", "thai_water"], "reject_styles": ["western_sculpt", "abg", "evening_glam"] },
+    "medium_feature": { "intensity_cap": 0.65, "max_main_colors": 2, "prefer_styles": ["thai_water", "smart_office", "korean_glass", "chinese_mood", "latte"] },
+    "dense_feature": { "intensity_cap": 0.85, "max_main_colors": 3, "prefer_styles": ["chinese_mood", "thai_glam", "evening_glam", "abg"] },
+    "bone_dominant": { "prefer_styles": ["chinese_mood", "smart_office", "western_sculpt"] },
+    "flesh_dominant": { "prefer_styles": ["japanese_sheer", "strawberry", "water", "korean_glass"] }
+  },
+  "skin": {
+    "dry": { "finish": ["dewy", "satin"], "prep": "hydrating", "powder": "spray_only", "avoid": ["matte", "powder_allover"] },
+    "oily": { "finish": ["soft_matte", "cloud"], "prep": "oil_control", "powder": "t_zone_full", "avoid": ["dewy"] },
+    "combination": { "finish": ["satin", "cloud"], "prep": "zone_based", "powder": "t_zone" },
+    "sensitive": { "finish": ["satin"], "prep": "minimal_layers", "avoid": ["heavy_fragrance", "many_layers"] },
+    "active_acne": { "finish": ["soft_matte"], "avoid": ["dewy", "shimmer_on_blemish"], "conceal": "spot_only" },
+    "texture_rough": { "finish": ["cloud", "soft_matte"], "avoid": ["shimmer_allover"] }
+  },
+  "undertone_rules": {
+    "warm": { "lip_families": ["tomato", "brick", "coral", "milk_tea", "terracotta", "chocolate"], "blush_families": ["peach", "apricot", "terracotta"], "reject": ["fuchsia", "blue_red", "neon_pink", "y2k_ice"] },
+    "cool": { "lip_families": ["rosewood", "fuchsia", "plum", "berry", "blue_red", "wine"], "blush_families": ["rose", "mauve", "cool_pink"], "reject": ["terracotta", "pumpkin", "latte_strong_warm"] },
+    "neutral": { "lip_families": ["rosewood", "true_red", "milk_tea", "coral", "nude_pink"], "blush_families": ["peach", "rose", "nude"] },
+    "olive": { "lip_families": ["berry", "rosewood", "terracotta_soft", "plum"], "blush_families": ["dusty_rose", "muted_terracotta"], "reject": ["pure_orange", "pure_pink", "neon"] }
+  }
+}

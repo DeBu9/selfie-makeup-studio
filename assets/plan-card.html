@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{CARD_TITLE}}</title>
+<style>
+  :root{
+    --ink:#1c1a18; --ink-2:#4a453f; --ink-3:#7d766d;
+    --line:#e6e0d8; --bg:#fbf9f6; --panel:#ffffff;
+    --accent:#8c4a3f; --accent-soft:#f3e6e1;
+    --warm:#b07a52; --ok:#3f6b52;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:40px 20px;
+    background:var(--bg); color:var(--ink);
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    font-size:15px; line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .card{
+    max-width:880px; margin:0 auto; background:var(--panel);
+    border:1px solid var(--line); border-radius:18px; overflow:hidden;
+    box-shadow:0 2px 4px rgba(28,26,24,.03),0 18px 48px rgba(28,26,24,.06);
+  }
+  /* ── header ── */
+  header{padding:34px 40px 26px; border-bottom:1px solid var(--line); background:linear-gradient(180deg,#fffdfa 0%,#fdf8f3 100%)}
+  .kicker{font-size:12px; letter-spacing:.16em; color:var(--accent); font-weight:600; text-transform:uppercase}
+  h1{margin:8px 0 4px; font-size:31px; line-height:1.25; letter-spacing:-.01em; font-weight:700}
+  .sub{color:var(--ink-3); font-size:13.5px; margin:0}
+  .tags{margin-top:16px; display:flex; flex-wrap:wrap; gap:8px}
+  .tag{font-size:12.5px; padding:4px 11px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-weight:500}
+  .tag.ghost{background:#f4f1ec; color:var(--ink-2)}
+  /* ── meta strip ── */
+  .meta{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border-bottom:1px solid var(--line)}
+  .meta div{background:var(--panel); padding:16px 20px}
+  .meta dt{font-size:11.5px; color:var(--ink-3); letter-spacing:.06em; margin:0 0 4px}
+  .meta dd{margin:0; font-size:15px; font-weight:600; color:var(--ink)}
+  .bar{height:5px; border-radius:99px; background:#efe9e1; margin-top:8px; overflow:hidden}
+  .bar i{display:block; height:100%; background:linear-gradient(90deg,#c99378,#8c4a3f); border-radius:99px}
+  /* ── before / after ── */
+  .shots{display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:26px 40px 6px; border-bottom:1px solid var(--line)}
+  .shots figure{margin:0}
+  .shots img{display:block; width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:12px; border:1px solid var(--line); background:#f3efea}
+  .shots figcaption{margin-top:9px; display:flex; flex-wrap:wrap; align-items:baseline; gap:8px}
+  .shots figcaption b{font-size:12.5px; font-weight:600; color:var(--ink-2)}
+  .shots figcaption span{font-size:12px; color:var(--ink-3)}
+  .shots .badge{font-size:11px; padding:2px 8px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-weight:500}
+  .shots.solo{grid-template-columns:minmax(0,1fr); max-width:420px}
+  /* ── body ── */
+  section{padding:28px 40px; border-bottom:1px solid var(--line)}
+  section:last-child{border-bottom:none}
+  h2{font-size:13px; letter-spacing:.14em; color:var(--ink-3); font-weight:600; margin:0 0 16px; text-transform:uppercase}
+  .why{margin:0; font-size:16px; line-height:1.9; color:var(--ink-2)}
+  .why strong{color:var(--ink); font-weight:600}
+  .why-list{margin:14px 0 0; padding:0; list-style:none; display:grid; gap:8px}
+  .why-list li{position:relative; padding-left:18px; font-size:14.5px; line-height:1.7; color:var(--ink-2)}
+  .why-list li:before{content:""; position:absolute; left:2px; top:9px; width:5px; height:5px; border-radius:50%; background:#c9a58f}
+  /* ── palette ── */
+  .palette{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px 20px}
+  .sw{display:flex; align-items:flex-start; gap:10px; min-width:0}
+  .dots{display:flex; gap:3px; padding-top:2px}
+  .dot{width:15px; height:15px; border-radius:50%; border:1px solid rgba(0,0,0,.06); flex:none}
+  .sw b{font-size:12.5px; font-weight:600; display:block; line-height:1.35}
+  .sw span{font-size:11.5px; color:var(--ink-3)}
+  /* ── steps ── */
+  .steps{counter-reset:s}
+  .step{position:relative; padding:0 0 26px 52px; counter-increment:s}
+  .step:before{
+    content:counter(s); position:absolute; left:0; top:0;
+    width:32px; height:32px; border-radius:50%;
+    background:#f4efe8; color:var(--accent); border:1px solid #e8ded3;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13.5px; font-weight:700; font-variant-numeric:tabular-nums;
+  }
+  .step:after{content:""; position:absolute; left:16px; top:38px; bottom:6px; width:1px; background:var(--line)}
+  .step:last-child:after{display:none}
+  .step h3{margin:3px 0 2px; font-size:16.5px; font-weight:650; letter-spacing:-.01em}
+  .phase{font-size:11px; letter-spacing:.1em; color:var(--accent); font-weight:600}
+  .rows{margin:10px 0 0; display:grid; gap:6px}
+  .row{display:grid; grid-template-columns:52px 1fr; gap:12px; align-items:start}
+  .row dt{font-size:12.5px; color:var(--ink-3); padding-top:1px}
+  .row dd{margin:0; font-size:14.5px; color:var(--ink-2); line-height:1.7}
+  .row dd em{font-style:normal; color:var(--ink); font-weight:600}
+  .stop{background:#f6f9f5; border-left:2px solid #cfe0d2; padding:6px 12px; border-radius:0 6px 6px 0; color:#3f6b52}
+  .pit{font-size:13.5px; color:#8a5a4a}
+  /* ── pitfalls ── */
+  .warn{display:grid; gap:14px}
+  /* 注意：必须用 > 子选择器。写成 .warn div 会连内层的 div 一起套进 22px 栅格，
+     中文标题会被压成一列竖排字（这个坑踩过一次）。 */
+  .warn>div{display:grid; grid-template-columns:24px minmax(0,1fr); gap:12px; font-size:14.5px; color:var(--ink-2); align-items:start}
+  .warn>div>i{font-style:normal; color:var(--accent); font-weight:700; line-height:1.8; font-variant-numeric:tabular-nums}
+  .warn p{margin:0; line-height:1.85}
+  .warn p b{display:block; color:var(--ink); font-weight:600; margin-bottom:2px; line-height:1.7}
+  /* ── footer ── */
+  footer{padding:24px 40px 30px; background:#faf7f2; color:var(--ink-3); font-size:12px; line-height:1.8}
+  footer b{color:var(--ink-2)}
+  .sig{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-top:10px; font-size:11.5px; color:#9a938a}
+  @media (max-width:640px){
+    body{padding:16px 10px}
+    header,section,footer{padding-left:22px; padding-right:22px}
+    h1{font-size:25px}
+    .meta{grid-template-columns:repeat(2,1fr)}
+    .palette{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .step{padding-left:44px}
+    .shots{grid-template-columns:1fr; padding-left:22px; padding-right:22px}
+  }
+  @media print{
+    body{background:#fff; padding:0; font-size:12.5px}
+    .card{box-shadow:none; border:none; border-radius:0}
+    section{padding:18px 26px; break-inside:avoid}
+    .step{break-inside:avoid}
+    .shots{padding:18px 26px 4px; break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <header>
+    <div class="kicker">Makeup Plan · {{STYLE_ID}}</div>
+    <h1>{{TITLE}}</h1>
+    <p class="sub">{{SUBTITLE}}</p>
+    <div class="tags">{{TAGS}}</div>
+  </header>
+
+  <dl class="meta">
+    <div><dt>妆容强度</dt><dd>{{INTENSITY_TEXT}} / 1.0<div class="bar"><i style="width:{{INTENSITY_PCT}}%"></i></div></dd></div>
+    <div><dt>妆效</dt><dd>{{FINISH_TEXT}}</dd></div>
+    <div><dt>遮瑕度</dt><dd>{{COVERAGE_TEXT}}</dd></div>
+    <div><dt>预计耗时</dt><dd>{{DURATION}}</dd></div>
+  </dl>
+
+  <section>
+    <h2>为什么这套适合你</h2>
+    <p class="why">{{WHY}}</p>
+  </section>
+
+  <section>
+    <h2>这套妆用到的色</h2>
+    <div class="palette">{{PALETTE}}</div>
+  </section>
+
+  <section>
+    <h2>照这个顺序化 · 一步一步</h2>
+    <div class="steps">{{STEPS}}</div>
+  </section>
+
+  <section>
+    <h2>三个最容易翻车的地方</h2>
+    <div class="warn">{{PITFALLS}}</div>
+  </section>
+
+  <footer>
+    <b>边界说明</b>：这是妆容预览与化妆建议，不是医美或整形模拟。效果图由 AI 依据原照片生成，用于参考配色与手法，真人上妆会受光线、产品与手法影响。
+    <div class="sig"><span>生成参数 · style={{STYLE_ID}} · intensity={{INTENSITY}} · finish={{FINISH}}</span><span>AI 生成内容，请勿用于身份冒用</span></div>
+  </footer>
+</div>
+</body>
+</html>
